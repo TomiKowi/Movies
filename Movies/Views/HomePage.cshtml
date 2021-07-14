@@ -1,0 +1,63 @@
+﻿@inherits Umbraco.Web.Mvc.UmbracoViewPage<ContentModels.HomePage>
+@using ContentModels = Umbraco.Web.PublishedModels;
+
+@{
+	Layout = null;
+}
+
+
+<!DOCTYPE HTML>
+
+<html>
+	<head>
+		<title>Movies Catalogue</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,400,700&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="/css/main.css" />
+	</head>
+<body>	
+
+<header><h1>@Model.Value("pageTitle")</h1></header>
+
+
+<h2>Comedy Movies</h2>
+<div>
+@{
+	var comedyMovie = Umbraco.Content(Guid.Parse("4f5c9a51-66d4-4b47-b96a-a6e66143e023"))
+    .ChildrenOfType("comedyMoviesItem")
+    .Where(x => x.IsVisible());
+    
+}
+
+<ul>
+	@foreach (var item in comedyMovie)
+	{
+<article>
+        <div><a>@item.Name</a></div>
+        <div>@Html.Truncate(item.Value("comedyMovieContent").ToString(),100,true)</div>
+</article>
+
+	}
+</ul>
+</div>
+
+
+<h2>Horror Movies</h2>
+
+@{
+	var horror = Umbraco.Content(Guid.Parse("f74dea1c-581f-4e7a-8548-3f1550a4971a"))
+    .ChildrenOfType("horrorMovieItem")
+    .Where(x => x.IsVisible());
+}
+<ul>
+	@foreach (var item in horror)
+	{
+<article>
+        <div><a>@item.Name</a></div>
+        <div>@Html.Truncate(item.Value("horrorMovieContent").ToString(),100,true)</div>
+        
+</article>
+	}
+</ul>
+</body>
